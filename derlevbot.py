@@ -16,7 +16,6 @@ async def on_ready():
     print('--------------------')
     await client.change_presence(activity=discord.Streaming(name=" ", url='https://twitch.tv/derlev'))
     print('Status set to "Streaming"')
-    # await client.get_user(377103974081495042).send(':red_square::orange_square::yellow_square::green_square:   **Ready**   :green_square::yellow_square::orange_square::red_square:')
 
 
 client.run(TOKEN)
