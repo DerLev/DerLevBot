@@ -33,7 +33,7 @@ async def watching(ctx, *, status):
         await ctx.send(f'Status changed to `Watching {status}`')
         print(f'Status set to "Watching {status}"')
     else:
-        await ctx.send('Only @DerLev#0441 can use this command')
+        await ctx.send('Only <@377103974081495042> can use this command')
 
 @watching.error
 async def watching_error(ctx, error):
@@ -43,7 +43,7 @@ async def watching_error(ctx, error):
             await ctx.send(f'Status changed to `Watching DerLev [Official]`')
             print(f'Status set to "Watching DerLev [Official]"')
         else:
-            await ctx.send('Only @DerLev#0441 can use this command')
+            await ctx.send('Only <@377103974081495042> can use this command')
 
 # Command to set the Status of the bot to "Listening to ..."
 @client.command()
@@ -53,7 +53,7 @@ async def listening(ctx, *, status):
         await ctx.send(f'Status changed to `Listening to {status}`')
         print(f'Status set to "Listening to {status}"')
     else:
-        await ctx.send('Only @DerLev#0441 can use this command')
+        await ctx.send('Only <@377103974081495042> can use this command')
 
 @listening.error
 async def listening_error(ctx, error):
@@ -63,7 +63,7 @@ async def listening_error(ctx, error):
             await ctx.send(f'Status changed to `Listening to DerLev`')
             print(f'Status set to "Listening to DerLev"')
         else:
-            await ctx.send('Only @DerLev#0441 can use this command')
+            await ctx.send('Only <@377103974081495042> can use this command')
 
 # Command to set the Status of the bot to "Streaming ..."
 @client.command()
@@ -73,7 +73,7 @@ async def streaming(ctx, *, status):
         await ctx.send(f'Status changed to `Streaming {status}`')
         print(f'Status set to "Streaming {status}"')
     else:
-        await ctx.send('Only @DerLev#0441 can use this command')
+        await ctx.send('Only <@377103974081495042> can use this command')
 
 @streaming.error
 async def streaming_error(ctx, error):
@@ -83,7 +83,7 @@ async def streaming_error(ctx, error):
             await ctx.send(f'Status changed to `Streaming`')
             print(f'Status set to "Streaming"')
         else:
-            await ctx.send('Only @DerLev#0441 can use this command')
+            await ctx.send('Only <@377103974081495042> can use this command')
 
 # Command to set the Status of the bot to "Playing ..."
 @client.command()
@@ -93,7 +93,7 @@ async def playing(ctx, *, status):
         await ctx.send(f'Status changed to `Playing {status}`')
         print(f'Status set to "Playing {status}"')
     else:
-        await ctx.send('Only @DerLev#0441 can use this command')
+        await ctx.send('Only <@377103974081495042> can use this command')
 
 @playing.error
 async def playing_error(ctx, error):
@@ -103,7 +103,7 @@ async def playing_error(ctx, error):
             await ctx.send(f'Status changed to `Playing`')
             print(f'Status set to "Playing"')
         else:
-            await ctx.send('Only @DerLev#0441 can use this command')
+            await ctx.send('Only <@377103974081495042> can use this command')
 
 
 client.run(TOKEN)
