@@ -30,7 +30,8 @@ async def on_command_error(ctx, error):
 async def watching(ctx, *, status):
     if ctx.author.id == 377103974081495042:
         await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=status))
-        await ctx.send(f'<:online:714858054683721818> Status changed to `Watching {status}`')
+        await ctx.send(f'<:online:714858054683721818> Status changed to `Watching {status}`', delete_after=3)
+        await discord.Message.delete(ctx.message)
         print(f'Status set to "Watching {status}"')
     else:
         await ctx.send('Only <@377103974081495042> can use this command')
@@ -40,7 +41,8 @@ async def watching_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         if ctx.author.id == 377103974081495042:
             await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="DerLev [Official]"))
-            await ctx.send(f'<:online:714858054683721818> Status changed to `Watching DerLev [Official]`')
+            await ctx.send(f'<:online:714858054683721818> Status changed to `Watching DerLev [Official]`', delete_after=3)
+            await discord.Message.delete(ctx.message)
             print(f'Status set to "Watching DerLev [Official]"')
         else:
             await ctx.send('Only <@377103974081495042> can use this command')
@@ -50,7 +52,8 @@ async def watching_error(ctx, error):
 async def listening(ctx, *, status):
     if ctx.author.id == 377103974081495042:
         await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=status))
-        await ctx.send(f'<:online:714858054683721818> Status changed to `Listening to {status}`')
+        await ctx.send(f'<:online:714858054683721818> Status changed to `Listening to {status}`', delete_after=3)
+        await discord.Message.delete(ctx.message)
         print(f'Status set to "Listening to {status}"')
     else:
         await ctx.send('Only <@377103974081495042> can use this command')
@@ -60,7 +63,8 @@ async def listening_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         if ctx.author.id == 377103974081495042:
             await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="DerLev"))
-            await ctx.send(f'<:online:714858054683721818> Status changed to `Listening to DerLev`')
+            await ctx.send(f'<:online:714858054683721818> Status changed to `Listening to DerLev`', delete_after=3)
+            await discord.Message.delete(ctx.message)
             print(f'Status set to "Listening to DerLev"')
         else:
             await ctx.send('Only <@377103974081495042> can use this command')
@@ -70,7 +74,8 @@ async def listening_error(ctx, error):
 async def streaming(ctx, *, status):
     if ctx.author.id == 377103974081495042:
         await client.change_presence(activity=discord.Streaming(name=status, url='https://twitch.tv/derlev'))
-        await ctx.send(f'<:streaming:714859437382434887> Status changed to `Streaming {status}`')
+        await ctx.send(f'<:streaming:714859437382434887> Status changed to `Streaming {status}`', delete_after=3)
+        await discord.Message.delete(ctx.message)
         print(f'Status set to "Streaming {status}"')
     else:
         await ctx.send('Only <@377103974081495042> can use this command')
@@ -80,7 +85,8 @@ async def streaming_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         if ctx.author.id == 377103974081495042:
             await client.change_presence(activity=discord.Streaming(name=" ", url='https://twitch.tv/derlev'))
-            await ctx.send(f'<:streaming:714859437382434887> Status changed to `Streaming`')
+            await ctx.send(f'<:streaming:714859437382434887> Status changed to `Streaming`', delete_after=3)
+            await discord.Message.delete(ctx.message)
             print(f'Status set to "Streaming"')
         else:
             await ctx.send('Only <@377103974081495042> can use this command')
@@ -90,7 +96,8 @@ async def streaming_error(ctx, error):
 async def playing(ctx, *, status):
     if ctx.author.id == 377103974081495042:
         await client.change_presence(activity=discord.Game(name=status))
-        await ctx.send(f'<:online:714858054683721818> Status changed to `Playing {status}`')
+        await ctx.send(f'<:online:714858054683721818> Status changed to `Playing {status}`', delete_after=3)
+        await discord.Message.delete(ctx.message)
         print(f'Status set to "Playing {status}"')
     else:
         await ctx.send('Only <@377103974081495042> can use this command')
@@ -100,7 +107,8 @@ async def playing_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         if ctx.author.id == 377103974081495042:
             await client.change_presence(activity=discord.Game(name=" "))
-            await ctx.send(f'<:online:714858054683721818> Status changed to `Playing`')
+            await ctx.send(f'<:online:714858054683721818> Status changed to `Playing`', delete_after=3)
+            await discord.Message.delete(ctx.message)
             print(f'Status set to "Playing"')
         else:
             await ctx.send('Only <@377103974081495042> can use this command')
@@ -110,7 +118,8 @@ async def playing_error(ctx, error):
 async def online(ctx):
     if ctx.author.id == 377103974081495042:
         await client.change_presence(activity=discord.CustomActivity(name=""), status=discord.Status.online)
-        await ctx.send(f'<:online:714858054683721818> Status changed to **Online**')
+        await ctx.send(f'<:online:714858054683721818> Status changed to **Online**', delete_after=3)
+        await discord.Message.delete(ctx.message)
         print(f'Status set to Online')
     else:
         await ctx.send('Only <@377103974081495042> can use this command')
@@ -120,7 +129,8 @@ async def online(ctx):
 async def idle(ctx):
     if ctx.author.id == 377103974081495042:
         await client.change_presence(activity=discord.CustomActivity(name=""), status=discord.Status.idle)
-        await ctx.send(f'<:idle:714859559054999635> Status changed to **Idle**')
+        await ctx.send(f'<:idle:714859559054999635> Status changed to **Idle**', delete_after=3)
+        await discord.Message.delete(ctx.message)
         print(f'Status set to Idle')
     else:
         await ctx.send('Only <@377103974081495042> can use this command')
@@ -130,7 +140,8 @@ async def idle(ctx):
 async def dnd(ctx):
     if ctx.author.id == 377103974081495042:
         await client.change_presence(activity=discord.CustomActivity(name=""), status=discord.Status.dnd)
-        await ctx.send(f'<:dnd:714859559574831235> Status changed to **DnD**')
+        await ctx.send(f'<:dnd:714859559574831235> Status changed to **DnD**', delete_after=3)
+        await discord.Message.delete(ctx.message)
         print(f'Status set to DnD')
     else:
         await ctx.send('Only <@377103974081495042> can use this command')
