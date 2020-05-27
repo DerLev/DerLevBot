@@ -44,7 +44,11 @@ async def help(ctx):
     e.title = ":question: Help :question:"
     e.add_field(
         name=" ·  `dlb!vote <messageid>`",
-        value="Add Emotes to a Message for voting"
+        value="Reacts with <:yes:715189455199404092> and <:no:715189454775779389> to a given message for voting"
+    )
+    e.add_field(
+        name=" ·  `dlb!vote2 <messageid>`",
+        value="Reacts with 👍 and 👎 to a given message for voting"
     )
     e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.guild.get_member(ctx.author.id).avatar_url_as(size=128))
     await ctx.send(embed=e)
@@ -217,6 +221,23 @@ async def vote_error(ctx, error):
         await discord.Message.delete(ctx.message)
         e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
         e.title = "<:yes:715189455199404092> Vote <:no:715189454775779389>"
+        e.description = "You need to give me a Message ID"
+        await ctx.send(embed=e, delete_after=10)
+
+# Command to let the Bot react to a message for Votes
+@client.command()
+async def vote2(ctx, msg):
+    await discord.Message.delete(ctx.message)
+    vote = await ctx.channel.fetch_message(msg)
+    await discord.Message.add_reaction(vote, emoji="👍")
+    await discord.Message.add_reaction(vote, emoji="👎")
+
+@vote2.error
+async def vote2_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await discord.Message.delete(ctx.message)
+        e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
+        e.title = "👍 Vote 👎"
         e.description = "You need to give me a Message ID"
         await ctx.send(embed=e, delete_after=10)
 
