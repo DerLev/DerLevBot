@@ -5,6 +5,7 @@ from discord.ext import commands
 TOKEN = open("TOKEN", "r").read()
 
 client = commands.Bot(command_prefix = 'dlb!')
+client.remove_command('help')
 
 
 ownerid = 377103974081495042
@@ -34,7 +35,19 @@ async def whoistheboss(ctx):
     e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
     e.description = f"The Boss is <@{ownerid}>"
     await ctx.send(embed=e, delete_after=5)
-    
+
+# Help Command
+@client.command()
+async def help(ctx):
+    await discord.Message.delete(ctx.message)
+    e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
+    e.title = ":question: Help :question:"
+    e.add_field(
+        name=" ·  `dlb!vote <messageid>`",
+        value="Add Emotes to a Message for voting"
+    )
+    e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.guild.get_member(ctx.author.id).avatar_url_as(size=128))
+    await ctx.send(embed=e)
 
 # Command to set the Status of the bot to "Watching ..."
 @client.command()
