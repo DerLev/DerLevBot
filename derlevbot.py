@@ -20,9 +20,9 @@ async def on_ready():
     # await client.get_user(377103974081495042).send(':red_square::orange_square::yellow_square::green_square:   **Ready**   :green_square::yellow_square::orange_square::red_square:')
 
 # If a command gives an error, do nothing
-@client.event
-async def on_command_error(ctx, error):
-    pass
+#@client.event
+#async def on_command_error(ctx, error):
+#    pass
 
 
 # Command to set the Status of the bot to "Watching ..."
@@ -179,5 +179,21 @@ async def dnd(ctx):
     else:
         await ctx.send('Only <@377103974081495042> can use this command')
 
+# Command to let the Bot react to a message for Votes
+@client.command()
+async def vote(ctx, msg):
+    await discord.Message.delete(ctx.message)
+    vote = await ctx.channel.fetch_message(msg)
+    await discord.Message.add_reaction(vote, emoji="yes:715189455199404092")
+    await discord.Message.add_reaction(vote, emoji="no:715189454775779389")
+
+@vote.error
+async def vote_error(ctx, error):
+    if isinstance(error, commands.MissingRequiredArgument):
+        await discord.Message.delete(ctx.message)
+        e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
+        e.title = "<:yes:715189455199404092> Vote <:no:715189454775779389>"
+        e.description = "For me to react with the Emotes,\nyou need to give me the message id."
+        await ctx.send(embed=e, delete_after=10)
 
 client.run(TOKEN)
