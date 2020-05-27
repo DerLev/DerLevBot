@@ -193,7 +193,7 @@ async def vote_error(ctx, error):
         await discord.Message.delete(ctx.message)
         e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
         e.title = "<:yes:715189455199404092> Vote <:no:715189454775779389>"
-        e.description = "For me to react with the Emotes,\nyou need to give me the message id."
+        e.description = "You need to give me a Message ID"
         await ctx.send(embed=e, delete_after=10)
 
 client.run(TOKEN)
