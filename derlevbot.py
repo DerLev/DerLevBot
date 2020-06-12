@@ -23,9 +23,9 @@ async def on_ready():
     print('Status set to "Streaming dlb!help"')
 
 # If a command gives an error, do nothing
-@client.event
-async def on_command_error(ctx, error):
-    pass
+#@client.event
+#async def on_command_error(ctx, error):
+#    pass
 
 
 # Command to see who the Boss is 😉
@@ -50,8 +50,29 @@ async def help(ctx):
         name=" ·  `dlb!vote2 <messageid>`",
         value="Reacts with 👍 and 👎 to a given message for voting"
     )
+    e.add_field(
+        name=" ·  `dlb!invite`",
+        value="Get the bot's invite-link"
+    )
+    e.add_field(
+        name=" ·  `dlb!createinvite <channelmention>`",
+        value="Create an infinite invite to a specific channel"
+    )
     e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.guild.get_member(ctx.author.id).avatar_url_as(size=128))
     await ctx.send(embed=e)
+
+# Invite command
+@client.command()
+async def invite(ctx):
+    await discord.Message.delete(ctx.message)
+    e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
+    e.title = ":mailbox_with_mail: Invite :mailbox_with_mail:"
+    t = "Click here to invite me to your server"
+    l = f"https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=8&scope=bot"
+    e.description = "**[{}]({})**".format(t, l)
+    await ctx.channel.trigger_typing()
+    time.sleep(1)
+    await ctx.send(embed=e, delete_after=10)
 
 # Command to set the Status of the bot to "Watching ..."
 @client.command()
@@ -240,5 +261,68 @@ async def vote2_error(ctx, error):
         e.title = "👍 Vote 👎"
         e.description = "You need to give me a Message ID"
         await ctx.send(embed=e, delete_after=10)
+
+# Command for "DerLev [Official]"
+@client.command()
+async def noti(ctx, user: discord.Member, type):
+    await discord.Message.delete(ctx.message)
+    if ctx.author.id == ownerid:
+        if type == "vip":
+            channel = await user.create_dm()
+            e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
+            e.title = "VIP-Status"
+            e.description = f"Hallo {user.mention}.\n\nLeider müssen wir dir mitteilen, dass dein VIP-Status entfernt wurde,\nweil du zu lange inaktiv warst.\n\n~ {client.user.mention}"
+            e.set_footer(text=f"Gesendet von {ctx.author}", icon_url=ctx.guild.get_member(ctx.author.id).avatar_url_as(size=128))
+            await channel.send(embed=e)
+            e2 = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
+            e2.title = f":incoming_envelope: Sent to {user} :incoming_envelope:"
+            await ctx.send(embed=e2, delete_after=10)
+        if type == "mod":
+            channel = await user.create_dm()
+            e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
+            e.title = "Mod-Status"
+            e.description = f"Hallo {user.mention}.\n\nLeider müssen wir dir mitteilen, dass deine Moderations-Rechte entfernt wurden,\nweil du zu lange inaktiv warst.\nDu kannst {ctx.author.mention} anschreiben, falls dies\nein Missverständnis war.\n\n~ {client.user.mention}"
+            e.set_footer(text=f"Gesendet von {ctx.author}", icon_url=ctx.guild.get_member(ctx.author.id).avatar_url_as(size=128))
+            await channel.send(embed=e)
+            e2 = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
+            e2.title = f":incoming_envelope: Sent to {user} :incoming_envelope:"
+            await ctx.send(embed=e2, delete_after=10)
+        if type == "admin":
+            channel = await user.create_dm()
+            e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
+            e.title = "Admin-Status"
+            e.description = f"Hallo {user.mention}.\n\nLeider müssen wir dir mitteilen,\ndass deine Administrations-Rechte entfernt wurden,\nweil du zu lange inaktiv warst.\nDu kannst {ctx.author.mention} anschreiben, falls dies\nein Missverständnis war.\n\n~ {client.user.mention}"
+            e.set_footer(text=f"Gesendet von {ctx.author}", icon_url=ctx.guild.get_member(ctx.author.id).avatar_url_as(size=128))
+            await channel.send(embed=e)
+            e2 = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
+            e2.title = f":incoming_envelope: Sent to {user} :incoming_envelope:"
+            await ctx.send(embed=e2, delete_after=10)
+
+@noti.error
+async def noti_error(ctx, error):
+    await discord.Message.delete(ctx.message)
+
+# Create Invite command
+@client.command()
+async def createinvite(ctx, channel: discord.TextChannel):
+    await discord.Message.delete(ctx.message)
+    invite = await channel.create_invite(reason=f"Command used by {ctx.author}")
+    e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
+    e.title = ":mailbox: Channel-Invite created :mailbox:"
+    t = f"{invite}"
+    l = f"{invite}"
+    text = (
+        f"Channel: <#{channel.id}>\n"
+        "Invite: **[{}]({})**".format(t, l)
+    )
+    e.add_field(name="Invite details:", value=text)
+    e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.guild.get_member(ctx.author.id).avatar_url_as(size=128))
+    await ctx.channel.trigger_typing()
+    time.sleep(1)
+    await ctx.send(embed=e)
+
+@createinvite.error
+async def createinvite_error(ctx, error):
+    await discord.Message.delete(ctx.message)
 
 client.run(TOKEN)
