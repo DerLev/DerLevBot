@@ -43,6 +43,19 @@ async def whoistheboss(ctx):
     e.description = f"The Boss is <@{ownerid}>"
     await ctx.send(embed=e, delete_after=5)
 
+# Ping command
+@client.command()
+async def ping(ctx):
+    #await ctx.send('Pong! {0}'.format(round(bot.latency, 1))
+    e = discord.Embed(color=discord.Color.from_rgb(83, 50, 138))
+    e.title = "Pong :ping_pong:"
+    e.add_field(
+        name="Latency:",
+        value="{0}ms".format(round((client.latency * 1000), 1))
+    )
+    await ctx.send(embed=e)
+    await discord.Message.delete(ctx.message)
+
 # Help Command
 @client.command()
 async def help(ctx):
