@@ -4,12 +4,18 @@ from discord.ext import commands
 
 TOKEN = open("TOKEN", "r").read()
 
-client = commands.Bot(command_prefix = 'dlb!')
-client.remove_command('help')
-
 
 # Your account ID
 ownerid = 377103974081495042
+# Your Command-Prefix
+prefix = 'dlb!'
+# Your Twitch-Page
+twitch = 'https://twitch.tv/derlev'
+
+
+client = commands.Bot(command_prefix = f'{prefix}')
+client.remove_command('help')
+
 
 
 @client.event
@@ -20,8 +26,8 @@ async def on_ready():
     print(client.user.id)
     print('--------------------')
     time.sleep(1)
-    await client.change_presence(activity=discord.Streaming(name="dlb!help", url='https://twitch.tv/derlev'))
-    print('Status set to "Streaming dlb!help"')
+    await client.change_presence(activity=discord.Streaming(name=f"{prefix}help", url=f'{twitch}'))
+    print(f'Status set to "Streaming {prefix}help"')
 
 # If a command gives an error, do nothing
 #@client.event
@@ -44,19 +50,19 @@ async def help(ctx):
     e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
     e.title = ":question: Help :question:"
     e.add_field(
-        name=" ·  `dlb!vote <messageid>`",
+        name=f" ·  `{prefix}vote <messageid>`",
         value="Reacts with <:yes:715189455199404092> and <:no:715189454775779389> to a given message for voting"
     )
     e.add_field(
-        name=" ·  `dlb!vote2 <messageid>`",
+        name=f" ·  `{prefix}vote2 <messageid>`",
         value="Reacts with 👍 and 👎 to a given message for voting"
     )
     e.add_field(
-        name=" ·  `dlb!invite`",
+        name=f" ·  `{prefix}invite`",
         value="Get the bot's invite-link"
     )
     e.add_field(
-        name=" ·  `dlb!createinvite <channelmention>`",
+        name=f" ·  `{prefix}createinvite <channelmention>`",
         value="Create an infinite invite to a specific channel"
     )
     e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.guild.get_member(ctx.author.id).avatar_url_as(size=128))
@@ -93,12 +99,12 @@ async def watching(ctx, *, status):
 async def watching_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         if ctx.author.id == ownerid:
-            await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="dlb!help"))
+            await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{prefix}help"))
             e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
-            e.description = "<:online:714858054683721818> Status changed to `Watching dlb!help`"
+            e.description = f"<:online:714858054683721818> Status changed to `Watching {prefix}help`"
             await discord.Message.delete(ctx.message)
             await ctx.send(embed=e, delete_after=5)
-            print(f'Status set to "Watching dlb!help"')
+            print(f'Status set to "Watching {prefix}help"')
         else:
             await discord.Message.delete(ctx.message)
             await ctx.send(f'Only <@{ownerid}> can use this command', delete_after=3)
@@ -121,12 +127,12 @@ async def listening(ctx, *, status):
 async def listening_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         if ctx.author.id == ownerid:
-            await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="dlb!help"))
+            await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f"{prefix}help"))
             e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
-            e.description = "<:online:714858054683721818> Status changed to `Listening to dlb!help`"
+            e.description = f"<:online:714858054683721818> Status changed to `Listening to {prefix}help`"
             await discord.Message.delete(ctx.message)
             await ctx.send(embed=e, delete_after=5)
-            print(f'Status set to "Listening to dlb!help"')
+            print(f'Status set to "Listening to {prefix}help"')
         else:
             await discord.Message.delete(ctx.message)
             await ctx.send(f'Only <@{ownerid}> can use this command', delete_after=3)
@@ -135,7 +141,7 @@ async def listening_error(ctx, error):
 @client.command()
 async def streaming(ctx, *, status):
     if ctx.author.id == ownerid:
-        await client.change_presence(activity=discord.Streaming(name=status, url='https://twitch.tv/derlev'))
+        await client.change_presence(activity=discord.Streaming(name=status, url=f'{twitch}'))
         e = discord.Embed(color=discord.Color.from_rgb(187, 91, 224))
         e.description = f"<:streaming:714859437382434887> Status changed to `Streaming {status}`"
         await discord.Message.delete(ctx.message)
@@ -149,12 +155,12 @@ async def streaming(ctx, *, status):
 async def streaming_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         if ctx.author.id == ownerid:
-            await client.change_presence(activity=discord.Streaming(name="dlb!help", url='https://twitch.tv/derlev'))
+            await client.change_presence(activity=discord.Streaming(name=f"{prefix}help", url=f'{twitch}'))
             e = discord.Embed(color=discord.Color.from_rgb(187, 91, 224))
-            e.description = "<:streaming:714859437382434887> Status changed to `Streaming dlb!help`"
+            e.description = f"<:streaming:714859437382434887> Status changed to `Streaming {prefix}help`"
             await discord.Message.delete(ctx.message)
             await ctx.send(embed=e, delete_after=5)
-            print(f'Status set to "Streaming dlb!help"')
+            print(f'Status set to "Streaming {prefix}help"')
         else:
             await discord.Message.delete(ctx.message)
             await ctx.send(f'Only <@{ownerid}> can use this command', delete_after=3)
@@ -177,12 +183,12 @@ async def playing(ctx, *, status):
 async def playing_error(ctx, error):
     if isinstance(error, commands.MissingRequiredArgument):
         if ctx.author.id == ownerid:
-            await client.change_presence(activity=discord.Game(name="dlb!help"))
+            await client.change_presence(activity=discord.Game(name=f"{prefix}help"))
             e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
-            e.description = "<:online:714858054683721818> Status changed to `Playing dlb!help`"
+            e.description = f"<:online:714858054683721818> Status changed to `Playing {prefix}help`"
             await discord.Message.delete(ctx.message)
             await ctx.send(embed=e, delete_after=5)
-            print(f'Status set to "Playing dlb!help"')
+            print(f'Status set to "Playing {prefix}help"')
         else:
             await discord.Message.delete(ctx.message)
             await ctx.send(f'Only <@{ownerid}> can use this command', delete_after=3)
