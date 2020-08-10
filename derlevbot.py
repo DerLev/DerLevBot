@@ -8,6 +8,7 @@ client = commands.Bot(command_prefix = 'dlb!')
 client.remove_command('help')
 
 
+# Your account ID
 ownerid = 377103974081495042
 
 
