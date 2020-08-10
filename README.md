@@ -20,6 +20,13 @@ This is my little "Python-Discord-Bot" Project
    - or `https://discord.com/api/oauth2/authorize?client_id=<CLIANT-ID>&permissions=519233&scope=bot` if you don't want Admin Perms
 2. Open the link in your Browser
 
+### Advanced Customization
+
+- Go into `derlevbot.py`
+  - edit the OwnerID
+  - edit the Prefix
+  - edit the Twitch-Page
+
 ## To-Dos
 
 - [x] Post Code on GitHub
