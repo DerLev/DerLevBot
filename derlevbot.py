@@ -1,30 +1,33 @@
 import discord
 import time
+import json
 from discord.ext import commands
 
-TOKEN = open("TOKEN.txt", "r").read()
+with open("config.json", "r") as f:
+    config = json.load(f)
 
-
-# Your account ID
-ownerid = 377103974081495042
-# Your Command-Prefix
-prefix = 'dlb!'
-# Your Twitch-Page
-twitch = 'https://twitch.tv/derlev'
+TOKEN = config["token"]
+ownerid = config["owner_id"]
+prefix = config["prefix"]
+twitch = config["twitch"]
 
 
 client = commands.Bot(command_prefix = f'{prefix}')
 client.remove_command('help')
 
 
+print('Contacting Discord...')
 
 @client.event
 async def on_ready():
+    print('==========================')
+    print('Connection established.')
+    print('==========================')
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="startup..."), status=discord.Status.dnd)
     print('Logged in as')
     print(client.user.name)
     print(client.user.id)
-    print('--------------------')
+    print('==========================')
     time.sleep(1)
     await client.change_presence(activity=discord.Streaming(name=f"{prefix}help", url=f'{twitch}'))
     print(f'Status set to "Streaming {prefix}help"')
