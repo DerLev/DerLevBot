@@ -11,7 +11,7 @@ This is my little "Python-Discord-Bot" Project
 - Clone Repo (`git clone https://github.com/DerLev/DerLevBot.git`)
 - Go into the Directory (`cd ~/DerLevBot/`)
 - Create Bot-App https://discordapp.com/developers/applications
-- Go into `TOKEN.txt`, delete everything in there and put your Bot-Token in
+- Go into `config.json` and put your Bot-Token under `TOKEN` in
 - Start the bot with `python3 derlevbot.py`
 
 ### Invite
@@ -22,7 +22,7 @@ This is my little "Python-Discord-Bot" Project
 
 ### Advanced Customization
 
-- Go into `derlevbot.py`
+- Go into `config.json`
   - edit the OwnerID
   - edit the Prefix
   - edit the Twitch-Page
@@ -31,7 +31,7 @@ This is my little "Python-Discord-Bot" Project
 
 - [x] Post Code on GitHub
 - [x] Create README.md
-- [ ] Make JSON file for handling TOKEN, OwnerID, Prefix and Twitch-Page
+- [x] Make JSON file for handling TOKEN, OwnerID, Prefix and Twitch-Page
 
 ## Links
 
