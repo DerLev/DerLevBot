@@ -387,4 +387,5 @@ async def changedyn_error(ctx, error):
     await discord.Message.delete(ctx.message)
     await ctx.send(content='Do you have the `Manage Server` permission ???\n**or**\nOne or more Arguments is missing or invalid.', delete_after=10)
 
+
 client.run(TOKEN)
