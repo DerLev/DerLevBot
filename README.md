@@ -17,7 +17,7 @@ This is my little "Python-Discord-Bot" Project
 ### Invite
 
 1. Put in your Client ID `https://discord.com/api/oauth2/authorize?client_id=<CLIENT-ID>&permissions=8&scope=bot`
-   - or `https://discord.com/api/oauth2/authorize?client_id=<CLIANT-ID>&permissions=519233&scope=bot` if you don't want Admin Perms
+   - or `https://discord.com/api/oauth2/authorize?client_id=<CLIENT-ID>&permissions=519233&scope=bot` if you don't want Admin Perms
 2. Open the link in your Browser
 
 ### Advanced Customization
