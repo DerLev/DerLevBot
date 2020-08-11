@@ -2,6 +2,7 @@ import discord
 import time
 import json
 from discord.ext import commands
+from discord.ext.commands import has_permissions, CheckFailure
 
 with open("config.json", "r") as f:
     config = json.load(f)
@@ -16,11 +17,14 @@ client = commands.Bot(command_prefix = f'{prefix}')
 client.remove_command('help')
 
 
+print('==========================')
+print('Project: DerLevBot')
+print('Author: DerLev')
+print('==========================')
 print('Contacting Discord...')
 
 @client.event
 async def on_ready():
-    print('==========================')
     print('Connection established.')
     print('==========================')
     await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name="startup..."), status=discord.Status.dnd)
@@ -80,6 +84,14 @@ async def help(ctx):
     e.add_field(
         name=f" ·  `{prefix}createinvite <channelmention>`",
         value="Create an infinite invite to a specific channel"
+    )
+    e.add_field(
+        name=f" ·  `{prefix}createdyn`",
+        value="Create a dynmic Message\n*`Manage Server` Permission required*"
+    )
+    e.add_field(
+        name=f" ·  `{prefix}changedyn <messageid> <channel> <newmessage>`",
+        value="Change a dynmic Message\n*`Manage Server` Permission required*"
     )
     e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.guild.get_member(ctx.author.id).avatar_url_as(size=128))
     await ctx.send(embed=e)
@@ -347,5 +359,32 @@ async def createinvite(ctx, channel: discord.TextChannel):
 @createinvite.error
 async def createinvite_error(ctx, error):
     await discord.Message.delete(ctx.message)
+
+# Create a dynamic Message
+@client.command()
+@has_permissions(manage_guild=True)
+async def createdyn(ctx):
+    await discord.Message.delete(ctx.message)
+    await ctx.channel.trigger_typing()
+    time.sleep(1)
+    await ctx.send(f'Change this message by typing `{prefix}changedyn <message_id> <channel> <message>`')
+
+# Change the dynamic Message
+@client.command()
+@has_permissions(manage_guild=True)
+async def changedyn(ctx, msgid: int, channel: discord.TextChannel, *, message):
+    await discord.Message.delete(ctx.message)
+    await ctx.channel.trigger_typing()
+    time.sleep(1)
+    dyn = await channel.fetch_message(msgid)
+    await dyn.edit(content=message)
+    e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
+    e.title = ":tools: Changed the message. :tools:"
+    await ctx.send(embed=e, delete_after=5)
+
+@changedyn.error
+async def changedyn_error(ctx, error):
+    await discord.Message.delete(ctx.message)
+    await ctx.send(content='Do you have the `Manage Server` permission ???\n**or**\nOne or more Arguments is missing or invalid.', delete_after=10)
 
 client.run(TOKEN)
