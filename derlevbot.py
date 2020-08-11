@@ -2,7 +2,7 @@ import discord
 import time
 from discord.ext import commands
 
-TOKEN = open("TOKEN", "r").read()
+TOKEN = open("TOKEN.txt", "r").read()
 
 
 # Your account ID
