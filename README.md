@@ -37,8 +37,8 @@ This is my little "Python-Discord-Bot" Project
 
 **DerLev:**
 
-[YouTube](https://www.youtube.com/channel/UCpEdoioUxagDLt56nT1WWaw) - [Twitter](https://twitter.com/_derlev_) - [Website](https://www.mc-mineserver.de/)
+[YouTube](https://www.youtube.com/channel/UCpEdoioUxagDLt56nT1WWaw) - [Twitter](https://twitter.com/_derlev_) - [Website](https://mc-mineserver.de/)
 
 **Bot:**
 
-[**Ready to Invite**](https://www.mc-mineserver.de/discord/bot4327/)
+[**Ready to Invite**](https://mc-mineserver.de/discord/bot4327/)
