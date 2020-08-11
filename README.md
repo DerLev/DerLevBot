@@ -11,7 +11,15 @@ This is my little "Python-Discord-Bot" Project
 - Clone Repo (`git clone https://github.com/DerLev/DerLevBot.git`)
 - Go into the Directory (`cd ~/DerLevBot/`)
 - Create Bot-App https://discordapp.com/developers/applications
-- Go into `config.json` and put your Bot-Token under `TOKEN` in
+- Create a JSON-File named `config.json` and put in your Token under `token`
+```json
+{
+  "token": "",
+  "owner_id": 377103974081495042,
+  "prefix": "dlb!",
+  "twitch": "https://twitch.tv/derlev"
+}
+```
 - Start the bot with `python3 derlevbot.py`
 
 ### Invite
