@@ -3,6 +3,10 @@ This is my little "Python-Discord-Bot" Project
 
 *Please don't tell me the code is bad. I know it !!!*
 
+### Help-Response from the Bot
+
+<img src="https://mc-mineserver.de/images/dlb-help-2020-08-25.png" width="50%" />
+
 ## Dependencies
 - [Python](https://www.python.org/downloads/)
 - [Discord.py](https://pypi.org/project/discord.py/) (`pip install discord.py`)
