@@ -39,13 +39,23 @@ async def on_ready():
 # If a command gives an error
 @client.event
 async def on_command_error(ctx, error):
-    current_time = time.strftime("%d.%m.%Y %H:%M:%S", time.localtime())
-    await discord.Message.delete(ctx.message)
-    e = discord.Embed(color=discord.Color.from_rgb(250, 166, 26))
-    e.title = "Hmm... somthing went wrong."
-    await ctx.send(embed=e, delete_after=10)
-    print(f'[ERROR] {current_time}')
-    print(f' -> {error}')
+    if isinstance(error, commands.CommandNotFound):
+        current_time = time.strftime("%d.%m.%Y %H:%M:%S", time.localtime())
+        await discord.Message.delete(ctx.message)
+        e = discord.Embed(color=discord.Color.from_rgb(250, 166, 26))
+        e.title = "Command not found"
+        e.description = f"Try `{prefix}help`"
+        await ctx.send(embed=e, delete_after=10)
+        print(f'[ERROR] {current_time}')
+        print(f' -> {error}')
+    else:
+        current_time = time.strftime("%d.%m.%Y %H:%M:%S", time.localtime())
+        await discord.Message.delete(ctx.message)
+        e = discord.Embed(color=discord.Color.from_rgb(250, 166, 26))
+        e.title = "Hmm... somthing went wrong."
+        await ctx.send(embed=e, delete_after=10)
+        print(f'[ERROR] {current_time}')
+        print(f' -> {error}')
 
 
 # Command to see who the Boss is 😉
