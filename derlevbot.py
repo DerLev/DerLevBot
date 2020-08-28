@@ -44,7 +44,8 @@ async def on_command_error(ctx, error):
     e = discord.Embed(color=discord.Color.from_rgb(250, 166, 26))
     e.title = "Hmm... somthing went wrong."
     await ctx.send(embed=e, delete_after=10)
-    print(f'[ERROR] {current_time} -> {error}')
+    print(f'[ERROR] {current_time}')
+    print(f' -> {error}')
 
 
 # Command to see who the Boss is 😉
