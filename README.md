@@ -53,4 +53,4 @@ This is my little "Python-Discord-Bot" Project
 
 **Bot:**
 
-[**Ready to Invite**](https://mc-mineserver.de/discord/bot4327/)
+[**Ready to Invite**](https://mc-mineserver.de/#discordbot)
