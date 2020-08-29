@@ -95,19 +95,19 @@ async def help(ctx):
     )
     e.add_field(
         name=f" ·  `{prefix}invite`",
-        value="Get the bot's invite-link\n*Aliases: inv*"
+        value="Get the bot's invite-link\n***Aliases:*** *inv*"
     )
     e.add_field(
         name=f" ·  `{prefix}createinvite <channelmention>`",
-        value="Create an infinite invite to a specific channel\n*Aliases: creinv*"
+        value="Create an infinite invite to a specific channel\n***Aliases:*** *creinv*"
     )
     e.add_field(
         name=f" ·  `{prefix}createdyn`",
-        value="Create a dynmic Message\n*`Manage Server` Permission required*\n*Aliases: credyn*"
+        value="Create a dynmic Message\n*`Manage Server` Permission required*\n***Aliases:*** *credyn*"
     )
     e.add_field(
         name=f" ·  `{prefix}changedyn <messageid> <channel> <newmessage>`",
-        value="Change a dynmic Message\n*`Manage Server` Permission required*\n*Aliases: chadyn, chdyn*"
+        value="Change a dynmic Message\n*`Manage Server` Permission required*\n***Aliases:*** *chadyn, chdyn*"
     )
     e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.guild.get_member(ctx.author.id).avatar_url_as(size=128))
     await ctx.send(embed=e)
