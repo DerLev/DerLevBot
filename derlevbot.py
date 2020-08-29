@@ -127,7 +127,7 @@ async def invite(ctx):
 
 # Command to set the Status of the bot to "Watching ..."
 @client.command()
-async def watching(ctx, *, status):
+async def watching(ctx, *, status = f"{prefix}help"):
     if ctx.author.id == ownerid:
         await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=status))
         e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
@@ -139,23 +139,9 @@ async def watching(ctx, *, status):
         await discord.Message.delete(ctx.message)
         await ctx.send(f'Only <@{ownerid}> can use this command', delete_after=3)
 
-@watching.error
-async def watching_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        if ctx.author.id == ownerid:
-            await client.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{prefix}help"))
-            e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
-            e.description = f"<:online:714858054683721818> Status changed to `Watching {prefix}help`"
-            await discord.Message.delete(ctx.message)
-            await ctx.send(embed=e, delete_after=5)
-            print(f'Status set to "Watching {prefix}help"')
-        else:
-            await discord.Message.delete(ctx.message)
-            await ctx.send(f'Only <@{ownerid}> can use this command', delete_after=3)
-
 # Command to set the Status of the bot to "Listening to ..."
 @client.command()
-async def listening(ctx, *, status):
+async def listening(ctx, *, status = f"{prefix}help"):
     if ctx.author.id == ownerid:
         await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=status))
         e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
@@ -167,23 +153,9 @@ async def listening(ctx, *, status):
         await discord.Message.delete(ctx.message)
         await ctx.send(f'Only <@{ownerid}> can use this command', delete_after=3)
 
-@listening.error
-async def listening_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        if ctx.author.id == ownerid:
-            await client.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f"{prefix}help"))
-            e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
-            e.description = f"<:online:714858054683721818> Status changed to `Listening to {prefix}help`"
-            await discord.Message.delete(ctx.message)
-            await ctx.send(embed=e, delete_after=5)
-            print(f'Status set to "Listening to {prefix}help"')
-        else:
-            await discord.Message.delete(ctx.message)
-            await ctx.send(f'Only <@{ownerid}> can use this command', delete_after=3)
-
 # Command to set the Status of the bot to "Streaming ..."
 @client.command()
-async def streaming(ctx, *, status):
+async def streaming(ctx, *, status = f"{prefix}help"):
     if ctx.author.id == ownerid:
         await client.change_presence(activity=discord.Streaming(name=status, url=f'{twitch}'))
         e = discord.Embed(color=discord.Color.from_rgb(187, 91, 224))
@@ -195,23 +167,9 @@ async def streaming(ctx, *, status):
         await discord.Message.delete(ctx.message)
         await ctx.send(f'Only <@{ownerid}> can use this command', delete_after=3)
 
-@streaming.error
-async def streaming_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        if ctx.author.id == ownerid:
-            await client.change_presence(activity=discord.Streaming(name=f"{prefix}help", url=f'{twitch}'))
-            e = discord.Embed(color=discord.Color.from_rgb(187, 91, 224))
-            e.description = f"<:streaming:714859437382434887> Status changed to `Streaming {prefix}help`"
-            await discord.Message.delete(ctx.message)
-            await ctx.send(embed=e, delete_after=5)
-            print(f'Status set to "Streaming {prefix}help"')
-        else:
-            await discord.Message.delete(ctx.message)
-            await ctx.send(f'Only <@{ownerid}> can use this command', delete_after=3)
-
 # Command to set the Status of the bot to "Playing ..."
 @client.command()
-async def playing(ctx, *, status):
+async def playing(ctx, *, status = f"{prefix}help"):
     if ctx.author.id == ownerid:
         await client.change_presence(activity=discord.Game(name=status))
         e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
@@ -222,20 +180,6 @@ async def playing(ctx, *, status):
     else:
         await discord.Message.delete(ctx.message)
         await ctx.send(f'Only <@{ownerid}> can use this command', delete_after=3)
-
-@playing.error
-async def playing_error(ctx, error):
-    if isinstance(error, commands.MissingRequiredArgument):
-        if ctx.author.id == ownerid:
-            await client.change_presence(activity=discord.Game(name=f"{prefix}help"))
-            e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
-            e.description = f"<:online:714858054683721818> Status changed to `Playing {prefix}help`"
-            await discord.Message.delete(ctx.message)
-            await ctx.send(embed=e, delete_after=5)
-            print(f'Status set to "Playing {prefix}help"')
-        else:
-            await discord.Message.delete(ctx.message)
-            await ctx.send(f'Only <@{ownerid}> can use this command', delete_after=3)
 
 # Command to set the Status of the bot to Online
 @client.command()
@@ -315,7 +259,7 @@ async def vote2_error(ctx, error):
 
 # Command for "DerLev [Official]"
 @client.command()
-async def noti(ctx, user: discord.Member, type):
+async def noti(ctx, user: discord.Member, type = "vip"):
     await discord.Message.delete(ctx.message)
     if ctx.author.id == ownerid:
         if type == "vip":
