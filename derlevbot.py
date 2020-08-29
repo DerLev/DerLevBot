@@ -59,7 +59,7 @@ async def on_command_error(ctx, error):
 
 
 # Command to see who the Boss is 😉
-@client.command()
+@client.command(aliases=['wib'])
 async def whoistheboss(ctx):
     await discord.Message.delete(ctx.message)
     e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
@@ -67,7 +67,7 @@ async def whoistheboss(ctx):
     await ctx.send(embed=e, delete_after=5)
 
 # Ping command
-@client.command()
+@client.command(aliases=['p'])
 async def ping(ctx):
     #await ctx.send('Pong! {0}'.format(round(bot.latency, 1))
     e = discord.Embed(color=discord.Color.from_rgb(83, 50, 138))
@@ -80,7 +80,7 @@ async def ping(ctx):
     await discord.Message.delete(ctx.message)
 
 # Help Command
-@client.command()
+@client.command(aliases=['?'])
 async def help(ctx):
     await discord.Message.delete(ctx.message)
     e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
@@ -95,25 +95,25 @@ async def help(ctx):
     )
     e.add_field(
         name=f" ·  `{prefix}invite`",
-        value="Get the bot's invite-link"
+        value="*Aliases: inv*\nGet the bot's invite-link"
     )
     e.add_field(
         name=f" ·  `{prefix}createinvite <channelmention>`",
-        value="Create an infinite invite to a specific channel"
+        value="*Aliases: creinv*\nCreate an infinite invite to a specific channel"
     )
     e.add_field(
         name=f" ·  `{prefix}createdyn`",
-        value="Create a dynmic Message\n*`Manage Server` Permission required*"
+        value="*Aliases: credyn*\nCreate a dynmic Message\n*`Manage Server` Permission required*"
     )
     e.add_field(
         name=f" ·  `{prefix}changedyn <messageid> <channel> <newmessage>`",
-        value="Change a dynmic Message\n*`Manage Server` Permission required*"
+        value="*Aliases: chadyn, chdyn*\nChange a dynmic Message\n*`Manage Server` Permission required*"
     )
     e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.guild.get_member(ctx.author.id).avatar_url_as(size=128))
     await ctx.send(embed=e)
 
 # Invite command
-@client.command()
+@client.command(aliases=['inv'])
 async def invite(ctx):
     await discord.Message.delete(ctx.message)
     e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
@@ -298,7 +298,7 @@ async def noti_error(ctx, error):
     await discord.Message.delete(ctx.message)
 
 # Create Invite command
-@client.command()
+@client.command(aliases=['creinv'])
 async def createinvite(ctx, channel: discord.TextChannel):
     await discord.Message.delete(ctx.message)
     invite = await channel.create_invite(reason=f"Command used by {ctx.author}")
@@ -321,7 +321,7 @@ async def createinvite_error(ctx, error):
     await discord.Message.delete(ctx.message)
 
 # Create a dynamic Message
-@client.command()
+@client.command(aliases=['credyn'])
 @has_permissions(manage_guild=True)
 async def createdyn(ctx):
     await discord.Message.delete(ctx.message)
@@ -330,7 +330,7 @@ async def createdyn(ctx):
     await ctx.send(f'Change this message by typing `{prefix}changedyn <message_id> <channel> <message>`')
 
 # Change the dynamic Message
-@client.command()
+@client.command(aliases=['chadyn', 'chdyn'])
 @has_permissions(manage_guild=True)
 async def changedyn(ctx, msgid: int, channel: discord.TextChannel, *, message):
     await discord.Message.delete(ctx.message)
