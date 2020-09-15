@@ -119,7 +119,7 @@ async def invite(ctx):
     e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
     e.title = ":mailbox_with_mail: Invite :mailbox_with_mail:"
     t = "Click here to invite me to your server"
-    l = f"https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=519233&scope=bot"
+    l = f"https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=519240&scope=bot"
     e.description = "**[{}]({})**".format(t, l)
     await ctx.channel.trigger_typing()
     time.sleep(1)
