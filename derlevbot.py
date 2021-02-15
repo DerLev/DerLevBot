@@ -33,7 +33,7 @@ async def on_ready():
     print(client.user.id)
     print('==========================')
     time.sleep(1)
-    await client.change_presence(activity=discord.Streaming(name='DerLev [Official]'))
+    await client.change_presence(activity=discord.Streaming(name="DerLev [Official]", url=f'{twitch}'))
     print(f'Status set to "DerLev [Official]"')
 
 # Comment until I have time to fix issues
