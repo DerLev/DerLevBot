@@ -1,5 +1,3 @@
-### **The bot currently doesn't work, and I don't have time to fix it**
-
 # DerLevBot
 This is my little "Python-Discord-Bot" Project
 
