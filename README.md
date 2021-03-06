@@ -5,7 +5,7 @@ This is my little "Python-Discord-Bot" Project
 
 ### Help-Response from the Bot
 
-<img src="https://mc-mineserver.de/_nuxt/img/dcb-help.jpg" width="500px" />
+<img src="https://mc-mineserver.de/_nuxt/img/dcb-help.webp" width="500px" />
 
 ## Dependencies
 - [Python](https://www.python.org/downloads/)
