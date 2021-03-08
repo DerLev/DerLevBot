@@ -47,7 +47,7 @@ This is my little "Python-Discord-Bot" Project
 
 **DerLev:**
 
-[GitHub](https://derlev.github.io/) - [YouTube](https://www.youtube.com/channel/UCpEdoioUxagDLt56nT1WWaw) - [Twitter](https://twitter.com/_derlev_) - [Website](https://mc-mineserver.de/)
+[GitHub](https://derlev.github.io/) - [Twitter](https://twitter.com/_derlev_) - [Website](https://mc-mineserver.de/)
 
 **Bot:**
 
