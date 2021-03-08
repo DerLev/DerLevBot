@@ -1,8 +1,6 @@
 # DerLevBot
 This is my little "Python-Discord-Bot" Project
 
-*Please don't tell me the code is bad. I know it !!!*
-
 ### Help-Response from the Bot
 
 <img src="https://mc-mineserver.de/_nuxt/img/dcb-help.webp" width="500px" />
@@ -43,6 +41,7 @@ This is my little "Python-Discord-Bot" Project
 - [x] Post Code on GitHub
 - [x] Create README.md
 - [x] Make JSON file for handling TOKEN, OwnerID, Prefix and Twitch-Page
+- [ ] More Features...
 
 ## Links
 
