@@ -1,13 +1,10 @@
 # DerLevBot
 This is my little "Python-Discord-Bot" Project
 
-### Help-Response from the Bot
-
-<img src="https://mc-mineserver.de/_nuxt/img/dcb-help.webp" width="500px" />
-
 ## Dependencies
 - [Python](https://www.python.org/downloads/)
 - [Discord.py](https://pypi.org/project/discord.py/) (`pip install discord.py`)
+- [discord-py-slash-command](https://pypi.org/project/discord-py-slash-command/) (`pip install discord-py-slash-command`)
 
 ## Quick Start
 - Clone Repo (`git clone https://github.com/DerLev/DerLevBot.git`)
@@ -26,21 +23,18 @@ This is my little "Python-Discord-Bot" Project
 
 ### Invite
 
-1. Put in your Client ID `https://discord.com/api/oauth2/authorize?client_id=<CLIENT-ID>&permissions=519240&scope=bot`
+1. Put in your Client ID `https://discord.com/api/oauth2/authorize?client_id=<CLIENT-ID>&permissions=519240&scope=bot%20applications.commands`
 2. Open the link in your Browser
 
 ### Advanced Customization
 
 - Go into `config.json`
   - edit the OwnerID
-  - edit the Prefix
   - edit the Twitch-Page
 
 ## To-Dos
 
-- [x] Post Code on GitHub
-- [x] Create README.md
-- [x] Make JSON file for handling TOKEN, OwnerID, Prefix and Twitch-Page
+- [x] Slash Commands
 - [ ] More Features...
 
 ## Links
@@ -48,7 +42,3 @@ This is my little "Python-Discord-Bot" Project
 **DerLev:**
 
 [GitHub](https://derlev.github.io/) - [Twitter](https://twitter.com/_derlev_) - [Website](https://mc-mineserver.de/)
-
-**Bot:**
-
-[**Ready to Invite**](https://mc-mineserver.de/discord-bot/)

@@ -2,18 +2,19 @@ import discord
 import time
 import json
 from discord.ext import commands
-from discord.ext.commands import has_permissions, CheckFailure
+from discord_slash import SlashCommand, SlashContext
+from discord_slash.utils.manage_commands import create_choice, create_option
 
 with open("config.json", "r") as f:
-    config = json.load(f)
+  config = json.load(f)
 
 TOKEN = config["token"]
 ownerid = config["owner_id"]
-prefix = config["prefix"]
 twitch = config["twitch"]
 
 
-client = commands.Bot(command_prefix = f'{prefix}')
+client = commands.Bot(command_prefix = "dlb!")
+slash = SlashCommand(client, sync_commands=True)
 client.remove_command('help')
 
 
@@ -33,7 +34,7 @@ async def on_ready():
   print(client.user.id)
   print('==========================')
   time.sleep(1)
-  await client.change_presence(activity=discord.Streaming(name="dlb!help", url=f'{twitch}'))
+  await client.change_presence(activity=discord.Streaming(name="slash commands", url=twitch))
   print(f'Status set')
 
 
@@ -48,73 +49,69 @@ async def on_command_error(ctx, error):
 
 
 # Ping command
-@client.command(aliases=['p'])
-async def ping(ctx):
-  #await ctx.send('Pong! {0}'.format(round(bot.latency, 1))
+@slash.slash(name="ping", description="Pings the bot")
+async def _ping(ctx: SlashContext):
   e = discord.Embed(color=discord.Color.from_rgb(83, 50, 138))
   e.title = "Pong :ping_pong:"
   e.add_field(
-      name="Latency:",
-      value="{0}ms".format(round((client.latency * 1000), 1))
+    name="Latency:",
+    value="{0}ms".format(round((client.latency * 1000), 1))
   )
-  await ctx.send(embed=e, delete_after=10)
-  await discord.Message.delete(ctx.message)
-
-# Help Command
-@client.command(aliases=['?'])
-async def help(ctx):
-  await discord.Message.delete(ctx.message)
-  e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
-  e.title = ":question: Help :question:"
-  e.add_field(
-    name = f" ·  `{prefix}vote <messageid>`",
-    value = "Reacts with <:yes:715189455199404092> and <:no:715189454775779389> to a given message for voting"
-  )
-  e.add_field(
-    name = f" ·  `{prefix}invite`",
-    value = "Get the bot's invite-link\n***Aliases:*** *inv*"
-  )
-  e.add_field(
-    name = f" ·  `{prefix}createinvite <channelmention>`",
-    value = "Create an infinite invite to a specific channel\n***Aliases:*** *creinv*"
-  )
-  e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url_as(size=128))
-  await ctx.send(embed=e, delete_after=30)
+  await ctx.send(embed=e, hidden=True)
 
 # Invite command
-@client.command(aliases=['inv'])
-async def invite(ctx):
-  await discord.Message.delete(ctx.message)
+@slash.slash(name="invite", description="Get the bot's invite link")
+async def _invite(ctx: SlashContext):
   e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
   e.title = ":mailbox_with_mail: Invite :mailbox_with_mail:"
   t = "Click here to invite me to your server"
-  l = f"https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=519240&scope=bot"
+  l = f"https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=519240&scope=bot%20applications.commands"
   e.description = "**[{}]({})**".format(t, l)
-  await ctx.channel.trigger_typing()
-  time.sleep(1)
-  await ctx.send(embed=e, delete_after=10)
+  await ctx.send(embed=e, hidden=True)
 
 # Command to see who the Boss is 😉
-@client.command(aliases=['wib'])
-async def whoistheboss(ctx):
-  await discord.Message.delete(ctx.message)
-  e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
+@slash.slash(name="whoisboss", description="See who the bot owner is")
+async def whoistheboss(ctx: SlashContext):
+  e = discord.Embed(color=discord.Color.from_rgb(47, 49, 54))
   e.description = f"The Boss is <@{ownerid}>"
-  await ctx.send(embed=e, delete_after=5)
+  await ctx.send(embed=e, hidden=True)
 
 # Command to let the Bot react to a message for Votes
-@client.command()
-async def vote(ctx, msg):
-  await discord.Message.delete(ctx.message)
+@slash.slash(
+  name="vote",
+  description="Reacts with voting emojis to a given message id",
+  options=[
+    create_option(
+      name="msg",
+      description="Message ID",
+      required=True,
+      option_type=3
+    )
+  ]
+)
+async def _vote(ctx: SlashContext, msg):
   vote = await ctx.channel.fetch_message(msg)
   await discord.Message.add_reaction(vote, emoji="yes:715189455199404092")
   await discord.Message.add_reaction(vote, emoji="no:715189454775779389")
+  e = discord.Embed(color=discord.Color.from_rgb(47, 49, 54))
+  e.description = ":white_check_mark: Done"
+  await ctx.send(embed=e, hidden=True)
 
 # Create Invite command
-@client.command(aliases=['creinv'])
-async def createinvite(ctx, channel: discord.TextChannel):
-  await discord.Message.delete(ctx.message)
-  invite = await channel.create_invite(reason=f"Command used by {ctx.author}")
+@slash.slash(
+  name="createinvite",
+  description="Create an infinite invite to a specific channel",
+  options=[
+    create_option(
+      name="channel",
+      description="Channel for invite",
+      required=True,
+      option_type=7
+    )
+  ]
+)
+async def _createinvite(ctx: SlashContext, channel: discord.TextChannel):
+  invite = await channel.create_invite(reason=f"Command used by {ctx.author}", unique=True, max_age=60 * 60 * 24)
   e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
   e.title = ":mailbox: Channel-Invite created :mailbox:"
   t = f"{invite}"
@@ -124,10 +121,7 @@ async def createinvite(ctx, channel: discord.TextChannel):
     "Invite: **[{}]({})**".format(t, l)
   )
   e.add_field(name="Invite details:", value=text)
-  e.set_footer(text=f"Requested by {ctx.author}", icon_url=ctx.author.avatar_url_as(size=128))
-  await ctx.channel.trigger_typing()
-  time.sleep(1)
-  await ctx.send(embed=e)
+  await ctx.send(embed=e, hidden=True)
 
 
 client.run(TOKEN)
