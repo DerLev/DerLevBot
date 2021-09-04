@@ -1,9 +1,13 @@
+from contextlib import suppress
 import discord
 import time
 import json
 from discord.ext import commands
-from discord_slash import SlashCommand, SlashContext
+from discord.utils import time_snowflake
+from discord_slash import SlashCommand, SlashContext, ComponentContext
 from discord_slash.utils.manage_commands import create_choice, create_option
+from discord_slash.utils.manage_components import create_select, create_select_option, create_actionrow, wait_for_component, create_button
+from discord_slash.model import ButtonStyle
 
 with open("config.json", "r") as f:
   config = json.load(f)
@@ -42,7 +46,7 @@ async def on_ready():
 @client.event
 async def on_command_error(ctx, error):
   await discord.Message.delete(ctx.message)
-  e = discord.Embed(color=discord.Color.from_rgb(250, 166, 26))
+  e = discord.Embed(color=discord.Colour.orange())
   e.title = "Hmm... somthing went wrong."
   e.description = f"`{error}`"
   await ctx.send(embed=e, delete_after=10)
@@ -51,7 +55,7 @@ async def on_command_error(ctx, error):
 # Ping command
 @slash.slash(name="ping", description="Pings the bot")
 async def _ping(ctx: SlashContext):
-  e = discord.Embed(color=discord.Color.from_rgb(83, 50, 138))
+  e = discord.Embed(color=discord.Colour.dark_purple())
   e.title = "Pong :ping_pong:"
   e.add_field(
     name="Latency:",
@@ -62,7 +66,7 @@ async def _ping(ctx: SlashContext):
 # Invite command
 @slash.slash(name="invite", description="Get the bot's invite link")
 async def _invite(ctx: SlashContext):
-  e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
+  e = discord.Embed(color=discord.Colour.green())
   e.title = ":mailbox_with_mail: Invite :mailbox_with_mail:"
   t = "Click here to invite me to your server"
   l = f"https://discord.com/api/oauth2/authorize?client_id={client.user.id}&permissions=519240&scope=bot%20applications.commands"
@@ -72,7 +76,7 @@ async def _invite(ctx: SlashContext):
 # Command to see who the Boss is 😉
 @slash.slash(name="whoisboss", description="See who the bot owner is")
 async def whoistheboss(ctx: SlashContext):
-  e = discord.Embed(color=discord.Color.from_rgb(47, 49, 54))
+  e = discord.Embed(color=discord.Colour.darker_gray())
   e.description = f"The Boss is <@{ownerid}>"
   await ctx.send(embed=e, hidden=True)
 
@@ -111,17 +115,52 @@ async def _vote(ctx: SlashContext, msg):
   ]
 )
 async def _createinvite(ctx: SlashContext, channel: discord.TextChannel):
-  invite = await channel.create_invite(reason=f"Command used by {ctx.author}", unique=True, max_age=60 * 60 * 24)
-  e = discord.Embed(color=discord.Color.from_rgb(66, 177, 126))
+  rand = int(time.time())
+  action_row = create_actionrow(*[
+    create_select(
+      placeholder="Duration of the invite",
+      min_values=1,
+      max_values=1,
+      options=[
+        create_select_option("1h", value=str(60 * 60)),
+        create_select_option("1d", value=str(60 * 60 * 24)),
+        create_select_option("7d", value=str(60 * 60 * 24 * 7))
+      ],
+      custom_id=f"1-{rand}"
+    )
+  ])
+  action_row2 = create_actionrow(*[
+    create_button(
+      label="Cancel",
+      style=ButtonStyle.red,
+      custom_id=f"2-{rand}"
+    )
+  ])
+  e = discord.Embed(color=discord.Colour.green())
+  e.title = ":mailbox: Create an invite :mailbox:"
+  text = (
+    f"Channel: <#{channel.id}>"
+  )
+  e.add_field(name="Invite details:", value=text)
+  await ctx.send(embed=e, hidden=True, components=[action_row, action_row2])
+  component_ctx: ComponentContext = await wait_for_component(client, components=[action_row, action_row2])
+  if(component_ctx.component_id == f"2-{rand}"):
+    e = discord.Embed(color=discord.Colour.red())
+    e.title = ":mailbox: Invite creation cancelled :mailbox:"
+    await component_ctx.edit_origin(embed=e, components=[])
+    return
+  invite = await channel.create_invite(reason=f"Command used by {ctx.author}", unique=True, max_age=int(component_ctx.selected_options[0]))
+  e = discord.Embed(color=discord.Colour.green())
   e.title = ":mailbox: Channel-Invite created :mailbox:"
   t = f"{invite}"
   l = f"{invite}"
   text = (
     f"Channel: <#{channel.id}>\n"
+    f"Duration: {int(int(component_ctx.selected_options[0]) / 60 / 60)}h\n"
     "Invite: **[{}]({})**".format(t, l)
   )
   e.add_field(name="Invite details:", value=text)
-  await ctx.send(embed=e, hidden=True)
+  await component_ctx.edit_origin(embed=e, components=[])
 
 
 client.run(TOKEN)
