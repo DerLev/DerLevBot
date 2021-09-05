@@ -169,7 +169,7 @@ async def _createinvite(ctx: SlashContext, channel: discord.TextChannel):
   await component_ctx.edit_origin(embed=e, components=[])
 
 # info command
-@slash.slash(name="info", description="Get general information about the bot", guild_ids=[726885822959321099])
+@slash.slash(name="info", description="Get general information about the bot")
 async def _info(ctx: SlashContext):
   e = discord.Embed(color=discord.Colour.blurple())
   e.title = ":robot: Bot info :robot:"
