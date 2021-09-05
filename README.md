@@ -15,7 +15,6 @@ This is my little "Python-Discord-Bot" Project
 {
   "token": "",
   "owner_id": 377103974081495042,
-  "prefix": "dlb!",
   "twitch": "https://twitch.tv/derlev"
 }
 ```

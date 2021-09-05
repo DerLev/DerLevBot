@@ -12,9 +12,15 @@ from discord_slash.model import ButtonStyle
 with open("config.json", "r") as f:
   config = json.load(f)
 
+with open("version.json", "r") as f:
+  version_file = json.load(f)
+
 TOKEN = config["token"]
 ownerid = config["owner_id"]
 twitch = config["twitch"]
+
+version = version_file["version"]
+dc_py = version_file["dc.py"]
 
 
 client = commands.Bot(command_prefix = "dlb!")
@@ -38,7 +44,7 @@ async def on_ready():
   print(client.user.id)
   print('==========================')
   time.sleep(1)
-  await client.change_presence(activity=discord.Streaming(name="slash commands", url=twitch))
+  await client.change_presence(activity=discord.Streaming(name="keep discord.py alive", url=twitch))
   print(f'Status set')
 
 
@@ -97,7 +103,7 @@ async def _vote(ctx: SlashContext, msg):
   vote = await ctx.channel.fetch_message(msg)
   await discord.Message.add_reaction(vote, emoji="yes:715189455199404092")
   await discord.Message.add_reaction(vote, emoji="no:715189454775779389")
-  e = discord.Embed(color=discord.Color.from_rgb(47, 49, 54))
+  e = discord.Embed(color=discord.Colour.darker_gray())
   e.description = ":white_check_mark: Done"
   await ctx.send(embed=e, hidden=True)
 
@@ -162,5 +168,17 @@ async def _createinvite(ctx: SlashContext, channel: discord.TextChannel):
   e.add_field(name="Invite details:", value=text)
   await component_ctx.edit_origin(embed=e, components=[])
 
+# info command
+@slash.slash(name="info", description="Get general information about the bot", guild_ids=[726885822959321099])
+async def _info(ctx: SlashContext):
+  e = discord.Embed(color=discord.Colour.blurple())
+  e.title = ":robot: Bot info :robot:"
+  text = (
+    f"Version: `{version}`\n"
+    f"discord.py `{dc_py}`\n"
+    "Latency: `{0}ms`".format(int(round((client.latency * 1000), 1)))
+  )
+  e.add_field(name="Bot details:", value=text)
+  await ctx.send(embed=e, hidden=True)
 
 client.run(TOKEN)
