@@ -22,6 +22,8 @@ twitch = config["twitch"]
 version = version_file["version"]
 dc_py = version_file["dc.py"]
 
+uptime = time.time()
+
 
 client = commands.Bot(command_prefix = "dlb!")
 slash = SlashCommand(client, sync_commands=True)
@@ -46,6 +48,7 @@ async def on_ready():
   time.sleep(1)
   await client.change_presence(activity=discord.Streaming(name="keep discord.py alive", url=twitch))
   print(f'Status set')
+  print(f"Uptime {int(time.time() - uptime)}s")
 
 
 # If a command gives an error
@@ -59,7 +62,7 @@ async def on_command_error(ctx, error):
 
 
 # Ping command
-@slash.slash(name="ping", description="Pings the bot")
+@slash.subcommand(base="bot", name="ping", description="Pings the bot")
 async def _ping(ctx: SlashContext):
   e = discord.Embed(color=discord.Colour.dark_purple())
   e.title = "Pong :ping_pong:"
@@ -70,7 +73,7 @@ async def _ping(ctx: SlashContext):
   await ctx.send(embed=e, hidden=True)
 
 # Invite command
-@slash.slash(name="invite", description="Get the bot's invite link")
+@slash.subcommand(base="bot", name="invite", description="Get the bot's invite link")
 async def _invite(ctx: SlashContext):
   e = discord.Embed(color=discord.Colour.green())
   e.title = ":mailbox_with_mail: Invite :mailbox_with_mail:"
@@ -80,7 +83,7 @@ async def _invite(ctx: SlashContext):
   await ctx.send(embed=e, hidden=True)
 
 # Command to see who the Boss is 😉
-@slash.slash(name="whoisboss", description="See who the bot owner is")
+@slash.subcommand(base="bot", name="whoisboss", description="See who the bot owner is")
 async def whoistheboss(ctx: SlashContext):
   e = discord.Embed(color=discord.Colour.darker_gray())
   e.description = f"The Boss is <@{ownerid}>"
@@ -169,14 +172,29 @@ async def _createinvite(ctx: SlashContext, channel: discord.TextChannel):
   await component_ctx.edit_origin(embed=e, components=[])
 
 # info command
-@slash.slash(name="info", description="Get general information about the bot")
+@slash.subcommand(base="bot", name="info", description="Get general information about the bot")
 async def _info(ctx: SlashContext):
+  d_uptime = time.time() - uptime
+  hours, remainder = divmod(int(d_uptime), 3600)
+  minutes, seconds = divmod(remainder, 60)
+  days, hours = divmod(hours, 24)
+
   e = discord.Embed(color=discord.Colour.blurple())
   e.title = ":robot: Bot info :robot:"
-  text = (
+
+  if days:
+    text = (
+      f"Version: `{version}`\n"
+      f"discord.py `{dc_py}`\n"
+      f"Latency: `{int(round((client.latency * 1000), 1))}ms`\n"
+      f"Uptime: `{str(days).zfill(1)}:{str(hours).zfill(2)}:{str(minutes).zfill(2)}:{str(seconds).zfill(2)}`"
+    )
+  else:
+    text = (
     f"Version: `{version}`\n"
     f"discord.py `{dc_py}`\n"
-    "Latency: `{0}ms`".format(int(round((client.latency * 1000), 1)))
+    f"Latency: `{int(round((client.latency * 1000), 1))}ms`\n"
+    f"Uptime: `{str(hours).zfill(2)}:{str(minutes).zfill(2)}:{str(seconds).zfill(2)}`"
   )
   e.add_field(name="Bot details:", value=text)
   await ctx.send(embed=e, hidden=True)
